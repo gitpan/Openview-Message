@@ -1,4 +1,11 @@
-Revision history for Perl extension OVO::Message.
+Revision history for Perl extension Openview::Message.
+
+0.03  Sat Jan  17 02:45:00 EST 2004
+   - No functional changes
+	- More Documentation cleanup
+   - Reorg files to more standard module locations
+
+   L Baxter
 
 0.02  Fri Feb  7 13:21:33 EST 2003
 	- Documentation cleanup

@@ -1,6 +1,6 @@
 package Openview::Message::Sender;
 
-use 5.6.0;
+#use 5.6.0;
 use strict;
 use warnings;
 require Exporter;
@@ -166,14 +166,14 @@ Openview::Message::Sender object.  This method takes a objection argument
 which is a hash reference of default values which will be used to call
 opcmsg().
 
-See L<Attributes> for a definition of the attributes recognized.
+See L<ATTRIBUTES> for a definition of the attributes recognized.
 
 =head2 send()
 
 Sends an Openview opcmsg() using arguments either taken from the hash provided
 to the call to send(), or from the attributes of the Openview object.
 
-See L<Attributes> for a definition of the attributes recognized.
+See L<ATTRIBUTES> for a definition of the attributes recognized.
 
 =head2 ATTRIBUTES
 
@@ -230,6 +230,6 @@ or "host not provided".
 
 =head1 AUTHOR
 
-Lincoln A. Baxter E<lt>lbaxter@netreach.netE<gt>
+Lincoln A. Baxter E<lt>lab@lincolnbaxter.comE<gt>
 
 =cut

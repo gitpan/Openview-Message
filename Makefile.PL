@@ -57,12 +57,13 @@ foreach my $lib ( glob( "$libpath/*.$so" ) )
 $libstr = "-L$libpath " .$libstr;
 
 WriteMakefile(
-     NAME		    => 'Openview::Message::opcmsg'
-    ,VERSION_FROM  => 'opcmsg.pm' 
+     DISTNAME      => 'Openview-Message'
+    ,NAME		    => 'Openview::Message::opcmsg'
+    ,VERSION_FROM  => 'lib/Openview/Message/opcmsg.pm' 
     ,PREREQ_PM	    => {} 
-    ,ABSTRACT_FROM => 'opcmsg.pm' 
-    ,AUTHOR        => 'Lincoln A Baxter <lbaxter@netreach.net>'
-#    ,XS            => { 'opsmsg.xs' => 'opcmsg.c' }
+    ,ABSTRACT      => 'Perl extension for sending OpenView messages' 
+    ,AUTHOR        => 'Lincoln A Baxter <lab@lincolnbaxter.com>'
+    ,XS            => { 'opsmsg.xs' => 'opcmsg.c' }
     ,LIBS		    => [ $libstr ]
     ,DEFINE	       => ''
     ,INC		       => "-I$incpath"
