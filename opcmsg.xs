@@ -36,6 +36,7 @@ constant(name)
    }
 =cut
 
+PROTOTYPES: ENABLE
 
 int
 opc_const_OPC_SEV_UNKNOWN()

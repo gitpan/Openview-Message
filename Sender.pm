@@ -14,7 +14,7 @@ our @EXPORT_OK = qw(
    OPC_SEV_CRITICAL
 ); 
 our @EXPORT = ();
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use Openview::Message::opcmsg;
 
@@ -63,14 +63,6 @@ sub send($;@)
    {
       %$h = @_;
    }
-   #print Dumper( $h );
-   #my ( $sev ,$app ,$obj ,$text ,$group ,$host ) ;
-   #$sev = $self->_severity( $h->{'severity'} );
-   #$app = $self->_application( $h->{'application'} );
-   #$obj = $self->_object( $h->{'object'} );
-   #$text = $self->_text( $h->{'text'} );
-   #$group = $self->_group( $h->{'group'} );
-   #$host = $self->_host( $h->{'host'} );
    opcmsg( $self->_severity( $h->{'severity'} )
           ,$self->_application( $h->{'application'} )
           ,$self->_object( $h->{'object'} )
@@ -127,8 +119,7 @@ __END__
 
 =head1 NAME
 
-Openview::Message::Sender - OO interface to sending HP OpenView 
-messages.
+Openview::Message::Sender - OO interface to sending HP OpenView messages.
 
 =head1 SYNOPSIS
 
@@ -153,39 +144,38 @@ messages.
 
 =head1 DESCRIPTION
 
-Openview::Message::opcmsg provides low level access to the HP Openview operations opcmsg() library
-API.  This enables perl scripts to send Openview messages without having to use system() calls
-or fork sub-process processes. (i.e. it is much more efficient than the opcmsg command).  
-
-Openview::Message::Sender also provides an OO interface, which maintains default values for most of the 
-the arguments to opcmsg().  The defaults are provided at the time the object is constructed.
-This provides for considerable for less code clutter, and no polution of your namespace.
+Openview::Message::Sender also provides an OO interface which maintains
+default values for most of the the arguments to the Openview opcmsg()
+API.  The defaults are provided at the time the object is constructed.  
+This provides for considerably for less code clutter, and no pollution
+of your namespace.
 
 
 =head2 EXPORTS
 
 Nothing is exported by default.
 
-=head2 METHODS (OO Interface)
+=head2 METHODS 
 
 The OO interface provides the following methods:
 
 =head2 new()
 
 Called off the Package.  The constructor returns a blessed instance of an
-Openview::Message object.  This method takes a objection argument which is a
-hash reference of default values which will be used to call opcmsg().
+Openview::Message::Sender object.  This method takes a objection argument
+which is a hash reference of default values which will be used to call
+opcmsg().
 
 See L<Attributes> for a definition of the attributes recognized.
 
 =head2 send()
 
 Sends an Openview opcmsg() using arguments either taken from the hash provided
-to the call to SendMessage, or from the attributes of the Openview object.
+to the call to send(), or from the attributes of the Openview object.
 
 See L<Attributes> for a definition of the attributes recognized.
 
-=head2 ATTRIBUTES (OO Interface)
+=head2 ATTRIBUTES
 
 =over
 
@@ -204,7 +194,7 @@ This attribute defaults to string 'object not provided'.
 
 This attribute is used for the opcmsg 'severity' argument.
 The values this takes are lowercase strings which are internally mapped
-to the Openview severity constants prefixed with 'Openview_SEV_'.  As in:
+to the Openview severity constants prefixed with 'OVC_SEV_'.  As in:
 
    unknown
    unchanged
@@ -217,8 +207,8 @@ to the Openview severity constants prefixed with 'Openview_SEV_'.  As in:
 
 This attribute defaults to 'unknown' (OPC_SEV_UNKNOWN).
 
-If one wants to use the OPC_SEC_* constants they can be imported into your
-name space if desired, and may be slightly more efficient.
+If one wants to use the OPC_SEV_* constants they can be imported into your
+name space if desired, and may be slightly more efficient, then the strings.
 
 =item text
 
@@ -227,7 +217,7 @@ This attribute defaults to the string 'text not provided'.
 
 =item group
 
-This attribute is used for the opcmsg 'group not provided' argument.
+This attribute is used for the opcmsg 'msg_group' argument.
 This attribute defaults to the string 'undefined'.
 
 =item host

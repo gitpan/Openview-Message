@@ -41,6 +41,21 @@ my $libpath = "$ovpath/lib";
 die "could not find $libpath" if not -d $incpath;
 die "could not find $libpath" if not -d $libpath;
 
+
+use Config;
+use File::Basename;
+my $libstr = '';
+my $so = $Config{'so'};
+foreach my $lib ( glob( "$libpath/*.$so" ) )
+{
+   #next if ! -x $lib;
+   next if -l $lib;
+   my ( $name ,$path ,$ext ) = fileparse( $lib ); 
+   $name =~ s/lib(\w+)\.$so$/$1/;
+   $libstr .= "-l$name ";
+}
+$libstr = "-L$libpath " .$libstr;
+
 WriteMakefile(
      NAME		    => 'Openview::Message::opcmsg'
     ,VERSION_FROM  => 'opcmsg.pm' 
@@ -48,7 +63,7 @@ WriteMakefile(
     ,ABSTRACT_FROM => 'opcmsg.pm' 
     ,AUTHOR        => 'Lincoln A Baxter <lbaxter@netreach.net>'
 #    ,XS            => { 'opsmsg.xs' => 'opcmsg.c' }
-    ,LIBS		    => [ "-L$libpath -ldce -ldcecrypt -lnsp -lopcasn -lopcas -lopc -lnspn" ]
+    ,LIBS		    => [ $libstr ]
     ,DEFINE	       => ''
     ,INC		       => "-I$incpath"
 );
@@ -63,6 +78,9 @@ variable to a valid message group prior to running make test.
 For example:
  
    export OVO_MSG_GROUP='aValidMsgGroupForYourSite'
+
+If compile fails (like on HP-UX) you can still use the 
+CLI implementation of this module
 
 EVM
 

@@ -14,11 +14,11 @@ our @ISA = qw(Exporter DynaLoader);
 our %EXPORT_TAGS = ( 'all' => [ qw(
 ) ] );
 
+   #OPC_SEV_UNKNOWN
+   #OPC_SEV_UNCHANGED
+   #OPC_SEV_NONE
 our @EXPORT_OK = qw(
    opcmsg   
-   OPC_SEV_UNKNOWN
-   OPC_SEV_UNCHANGED
-   OPC_SEV_NONE
    OPC_SEV_NORMAL
    OPC_SEV_WARNING
    OPC_SEV_MINOR
@@ -26,17 +26,33 @@ our @EXPORT_OK = qw(
    OPC_SEV_CRITICAL
 );
 our @EXPORT = grep( !/_UN|_NONE/ ,@EXPORT_OK );
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
-bootstrap Openview::Message::opcmsg $VERSION; 
+if ( $ENV{CLI_OPENVIEW_SENDER} )
+{
+   require Openview::Message::cliopcmsg;
+   import Openview::Message::cliopcmsg;
+}
+else
+{
+   eval { bootstrap Openview::Message::opcmsg $VERSION; };
+   if ( $@ )
+   {
+      #HP will not tell us how to link with opcmsg() API
+      #on HP so...  we fake it with the opcmsg command
+      #print "\n\nFaking it\n\n" ;
+      require Openview::Message::cliopcmsg;
+      import Openview::Message::cliopcmsg;
+   }
+}
 
 1;
+
 __END__
 
 =head1 NAME
 
-Openview::Message::opcmsg - Perl extension for sending HP OpenView Operations
-messages.
+Openview::Message::opcmsg - Perl extension for sending OpenView messages.
 
 =head1 SYNOPSIS
 
@@ -80,6 +96,20 @@ not very useful:
 
 Openview::Message::Sender for an OO interface to this function,
 which does not export symbols into the user's namespace.
+
+=head1 BUGS
+
+Apparently, the HP Openview library is "not fork-safe".  This creates
+problems for forking servers.  A work-around for this is to 'pre-fork'
+an opcmsg server that implements this function, and have your forking
+servers send it messages.  
+
+Alternatively, you can set CLI_MESSAGE_SENDER=1 in your environment,
+we this module will use the CLI interface instead.
+
+HP refused to offer support to the author's
+employer for linking with opcmsg() on their own platforms (HP), so
+we fake it with L<Openview::Message::cliopcmsg>.
 
 =head1 AUTHOR
 

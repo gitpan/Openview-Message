@@ -1,8 +1,7 @@
 OVO::Message version 0.01
 =====================
 
-This module provides access to the HP Openview Operation
-opcmsg API.
+This module provides access to the HP Openview Operation opcmsg API.
 
 INSTALLATION
 
@@ -33,7 +32,6 @@ usually installed in:
 Makefile.PL allows you to specify a different path with
 
    perl Makefile.PL OV=/path/to/your/OV
-
 
 COPYRIGHT AND LICENCE
 

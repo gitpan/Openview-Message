@@ -4,6 +4,7 @@ MANIFEST
 README
 t/00opcmsg.t
 t/01Sender.t
+cliopcmsg.pm
 opcmsg.pm
 opcmsg.xs
 Sender.pm
